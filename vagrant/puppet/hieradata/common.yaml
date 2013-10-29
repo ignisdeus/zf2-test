@@ -1,0 +1,113 @@
+---
+vagrantfile-local:
+    vm:
+        box: squeeze64
+        box_url: 'http://puppet-vagrant-boxes.puppetlabs.com/debian-607-x64-vbox4210.box'
+        hostname: null
+        network:
+            private_network: 192.168.56.101
+            forwarded_port:
+                b4g9Krq1Uelu:
+                    host: ''
+                    guest: ''
+        provider:
+            virtualbox:
+                modifyvm:
+                    name: zf2
+                    natdnshostresolver1: on
+                    memory: '512'
+                setextradata:
+                    VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root: 1
+        provision:
+            'shell, :path': shell/librarian-puppet-vagrant.sh
+            'shell, :inline': 'if [[ ! -f /apt-get-run ]]; then sudo apt-get update && touch /apt-get-run; fi'
+            puppet:
+                manifests_path: puppet/manifests
+                options:
+                    - --verbose
+                    - '--hiera_config /vagrant/hiera.yaml'
+                    - '--parser future'
+        synced_folder:
+            J648xGb6XK47:
+                id: webroot
+                source: ../
+                target: /var/www
+                nfs: 'false'
+        usable_port_range: 2200..2250
+    ssh:
+        host: null
+        port: null
+        private_key_path: null
+        username: vagrant
+        guest_port: null
+        keep_alive: true
+        forward_agent: false
+        forward_x11: false
+        shell: 'bash -l'
+    vagrant:
+        host: ':detect'
+server:
+    packages:
+        - build-essential
+        - vim
+        - curl
+        - git-core
+    dot_files:
+        -
+            bash_aliases: null
+apache:
+    modules:
+        - php
+        - rewrite
+    vhosts:
+        zf2.local:
+            servername: zf2.local
+            serveraliases:
+                - zf2.local
+            docroot: /var/www/public
+            port: '80'
+            override: 'All'
+            setenv:
+                - 'APP_ENV dev'
+    user: www-data
+    group: www-data
+    default_vhost: true
+    mpm_module: prefork
+php:
+    version: '54'
+    composer: '1'
+    modules:
+        php:
+            - cli
+            - curl
+            - intl
+            - mcrypt
+        pear: {  }
+        pecl:
+            - pecl_http
+    ini:
+        display_errors: On
+        error_reporting: '-1'
+    timezone: America/Chicago
+xdebug:
+    install: 0
+    settings:
+        xdebug.default_enable: '1'
+        xdebug.remote_autostart: '0'
+        xdebug.remote_connect_back: '1'
+        xdebug.remote_enable: '1'
+        xdebug.remote_handler: dbgp
+        xdebug.remote_port: '9000'
+mysql:
+    root_password: '1234'
+    phpmyadmin: 0
+    databases:
+        8Uwo16zh2VPg:
+            grant:
+                - ALL
+            name: main_db
+            host: localhost
+            user: admin
+            password: password
+            sql_file: ''
+
