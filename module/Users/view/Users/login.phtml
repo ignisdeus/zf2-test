@@ -1,3 +1,51 @@
 <h2> Login </h2>
-<p> This page will hold the content for the login form </p>
+
+<section class="login">
+    <?php if ($this->error): ?>
+        <p class="error">
+            There were one or more issues with your submission.
+            Please correct them as
+            indicated below.
+        </p>
+    <?php endif ?>
+    <?php
+    $form = $this->form;
+    $form->prepare();
+    $form->setAttribute('action', $this->url(NULL, array('controller'=>'Users', 'action' => 'tryLogin')));
+    $form->setAttribute('method', 'post');
+    echo $this->form()->openTag($form);
+    ?>
+
+    <table class="table">
+        <tr>
+            <td><?php echo $this->formLabel($form->get('email')); ?></td>
+            <td>
+                <?php
+                echo $this->formElement($form->get('email'));
+                echo $this->formElementErrors($form->get('email'));
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->formLabel($form->get('password'));
+                ?></td>
+            <td>
+                <?php
+                echo $this->formElement($form->get('password'));
+                echo $this->formElementErrors($form->get('password'));
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php
+                echo $this->formElement($form->get('submit'));
+                echo $this->formElementErrors($form->get('submit'));
+                ?>
+            </td>
+        </tr>
+    </table>
+    <?php echo $this->form()->closeTag() ?>
+</section>
+
 <a href="/users"><< Back to Home</a>

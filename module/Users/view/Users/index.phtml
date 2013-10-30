@@ -1,4 +1,23 @@
 <h1>Welcome to Users Module</h1>
 <a href="/users/login">Login</a> | <a href="/users/register">New User Registration</a>
 
-<?php Zend\Debug\Debug::dump($this->data); ?>
+<?php if(!empty($this->users)) { ?>
+<h4>Current Users:</h4>
+<table class="table">
+    <thead>
+    <tr><th>ID</th><th>Name</th><th>Email</th></tr>
+    </thead>
+
+    <tbody>
+    <?php foreach($this->users as $user) { ?>
+    <tr>
+        <td><?php echo $user->userId; ?></td>
+        <td><?php echo $user->name; ?></td>
+        <td><?php echo $user->email; ?></td>
+    </tr>
+    <?php } ?>
+    </tbody>
+</table>
+<?php } ?>
+
+<?php //Zend\Debug\Debug::dump($this->data); ?>

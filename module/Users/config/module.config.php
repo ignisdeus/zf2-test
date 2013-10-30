@@ -1,4 +1,6 @@
 <?php
+namespace Users;
+
 return array(
     'controllers' => array(
         'invokables' => array(
@@ -48,5 +50,21 @@ return array(
         ),
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
+    ),
+
+    // Doctrine config
+    'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                )
+            )
+        )
     ),
 );

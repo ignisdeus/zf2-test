@@ -5,25 +5,13 @@ namespace Users\Form;
 use Zend\Form\Form;
 use Zend\Validator\EmailAddress;
 
-class RegisterForm extends Form
+class LoginForm extends Form
 {
     function __construct($name = null)
     {
-        parent::__construct('Register');
+        parent::__construct('Login');
         $this->setAttribute('method', 'post');
         $this->setAttribute('enctype', 'multipart/form-data');
-
-        $this->add(
-          array(
-              "name" => "name",
-              "attributes" => array(
-                "type" => "text",
-              ),
-              "options" => array(
-                "label" => "Full Name"
-              ),
-          )
-        );
 
         $this->add(
             array(
@@ -53,27 +41,14 @@ class RegisterForm extends Form
 
         $this->add(
             array(
-                "name" => "confirm_password",
-                "attributes" => array(
-                    "type" => "password",
-                    "required" => "required"
-                ),
-                "options" => array(
-                    "label" => "Confirm Password"
-                ),
-            )
-        );
-
-        $this->add(
-            array(
                 "name" => "submit",
                 "attributes" => array(
                     "type" => "submit",
-                    "value" => "Register",
-                    "class" => "btn btn-success",
+                    "value" => "Login",
+                    "class" => "btn btn-info",
                 ),
                 "options" => array(
-                    "label" => "Register"
+                    "label" => "Login"
                 ),
             )
         );
