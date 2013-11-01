@@ -12,10 +12,6 @@ use Zend\InputFilter\InputFilterInterface;
  *
  * @ORM\Entity
  * @ORM\Table(name="user")
- * @property string $name
- * @property string $email
- * @property int $userId
- * @property string $password
  */
 class User implements InputFilterAwareInterface
 {

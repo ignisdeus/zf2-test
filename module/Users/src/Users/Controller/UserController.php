@@ -90,15 +90,14 @@ class UserController extends AbstractActionController
         }
 
         $post = $this->request->getPost();
-        $entity = $this->getEntityManager()->getRepository('Users\Entity\User')->findByEmail($post["email"]);
+        $entity = $this->getEntityManager()->getRepository('Users\Entity\User')->findOneByEmail($post["email"]);
 
-        if(!empty($entity)){
+        \Zend\Debug\Debug::dump($entity);
+        die();
 
-            $user = new User();
-            $user->populate($entity);
-
-            if($user->verifyPassword($post["password"])){
-                $view = new ViewModel($user);
+        if($entity){
+            if($entity->verifyPassword($post["password"])){
+                $view = new ViewModel(array("user" => $entity));
                 $view->setTemplate('users/account');
                 return $view;
             }
